@@ -26,11 +26,27 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { data } = await github.rest.repos.getLatestRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            })
-            return data.id
+            try {
+              const { data } = await github.rest.repos.getLatestRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+              });
+              return data.id;
+            } catch (error) {
+              if (error.status === 404) {
+                // 如果没有找到最新的 release，创建一个新的
+                const { data } = await github.rest.repos.createRelease({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  tag_name: process.env.PACKAGE_VERSION,
+                  name: `v${process.env.PACKAGE_VERSION}`,
+                  draft: true,
+                  prerelease: false
+                });
+                return data.id;
+              }
+              throw error;
+            }
 
   build-tauri:
     needs: create-release

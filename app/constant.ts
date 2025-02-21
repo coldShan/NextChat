@@ -171,7 +171,7 @@ export const Anthropic = {
 };
 
 export const OpenaiPath = {
-  ChatPath: "v1/chat/completions",
+  ChatPath: "chat/completions",
   SpeechPath: "v1/audio/speech",
   ImagePath: "v1/images/generations",
   UsagePath: "dashboard/billing/usage",
@@ -405,7 +405,7 @@ You are an AI assistant with access to system tools. Your role is to help users 
 
 export const SUMMARIZE_MODEL = "gpt-4o-mini";
 export const GEMINI_SUMMARIZE_MODEL = "gemini-pro";
-export const DEEPSEEK_SUMMARIZE_MODEL = "deepseek-chat";
+export const DEEPSEEK_SUMMARIZE_MODEL = "deepseek-v3";
 
 export const KnowledgeCutOffDate: Record<string, string> = {
   default: "2021-09",
